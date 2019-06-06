@@ -67,7 +67,7 @@ var client = mysql.createConnection({
 // Displays all characters
 app.get("/view", function(req, res) {
   // return res.json(characters);
-
+/* 
   client.connect();
 
   client.query('SELECT * FROM reservations WHERE status = "active";', (err, result) => {
@@ -75,9 +75,9 @@ app.get("/view", function(req, res) {
     if (err) throw err;
     //res.json(result)
 
-  /* for (let row of res.rows) {
+  for (let row of res.rows) {
     console.log(JSON.stringify(row));
-  } */
+  }
   client.end();
   });
 
@@ -87,13 +87,13 @@ app.get("/view", function(req, res) {
     if (err) throw err;
     //res.json(result)
 
-  /* for (let row of res.rows) {
+  for (let row of res.rows) {
     console.log(JSON.stringify(row));
-  } */
+  }
   client.end();
   });
 
-
+ */
 
 
   res.sendFile(path.join(__dirname, "app/public/view.html"));
