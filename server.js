@@ -1,107 +1,84 @@
 const express = require('express')
-var path = require("path");
-const inquirer = require('inquirer')
-const fs = require('fs')
-const mysql = require('mysql')
-const readline = require('readline')
+const path = require("path");
+
+const mysql = require("mysql")
+require("dotenv").config();
 var keys = require("./keys.js")
 
 // Sets up the Express App
 // =============================================================
-var app = express();
-var PORT = process.env.PORT || 3000;
+const app = express();
+const PORT = process.env.PORT || 3000;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, '/app/public')));
 
 // Routes
-// =============================================================
-
-// Basic route that sends the user first to the AJAX Page
 app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "app/public/index.html"));
+    console.log("cd home");
+    res.sendFile(path.join(__dirname, "app/public/index.html"));
 });
 
 app.get("/make", function(req, res) {
-  res.sendFile(path.join(__dirname, "app/public/make.html"));
+    console.log("cd make");
+    res.sendFile(path.join(__dirname, "app/public/make.html"));
 });
 
-/* app.get("/view", function(req, res) {
-  res.sendFile(path.join(__dirname, "app/public/view.html"));
-}); */
-
-
-
-var connection = mysql.createConnection({
-    host: "localhost",
-  
-    // Your port; if not 3306
-    port: 3306,
-  
-    // Your username
-
-    user: "root", //keys.mysql.id,
-    password: "Tbh.94552", // keys.mysql.secret,
-
-    database: "reservationsDB"
-  });
-  
-app.use(express.static('public'));
-
-var client = mysql.createConnection({
-    host: "localhost",
-  
-    // Your port; if not 3306
-    port: 3306,
-  
-    // Your username
-
-    user: "root", //keys.mysql.id,
-    password: "Tbh.94552", // keys.mysql.secret,
-
-    database: "reservationsDB"
-  });
-
-// Displays all characters
 app.get("/view", function(req, res) {
-  // return res.json(characters);
-/* 
-  client.connect();
-
-  client.query('SELECT * FROM reservations WHERE status = "active";', (err, result) => {
-    console.log('query active run')
-    if (err) throw err;
-    //res.json(result)
-
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  client.end();
-  });
-
-
-  client.query('SELECT * FROM reservations WHERE status = "waitlist";', (err, result) => {
-    console.log('query waitlist run')
-    if (err) throw err;
-    //res.json(result)
-
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }
-  client.end();
-  });
-
- */
-
-
-  res.sendFile(path.join(__dirname, "app/public/view.html"));
+    console.log("cd view")
+    res.sendFile(path.join(__dirname, "app/public/view.html"));
 
 });
 
 
+app.get("/api/view_active", function(req, res) {
 
+    query = 'SELECT * FROM reservations WHERE status = "active";'
+    pullData(query);
+
+    console.log("sending view_active")
+});
+
+app.get("/api/view_waitlist", function(req, res) {
+
+    query = 'SELECT * FROM reservations WHERE status = "waitlist";'
+    res.json(pullData(query));
+
+    console.log("sending view_waitlist")
+});
+
+var pullData = function(query) {
+
+    var client = mysql.createConnection({
+        host: "localhost",
+        port: 3306,
+         
+        user: keys.mysql.id,
+        password: keys.mysql.secret,
+    
+        database: "reservationsDB"
+    });
+    
+    var mysqlGet = function(query) {
+    
+        client.connect();
+    
+        client.query(query, (err, result) => {
+        console.log('query active run')
+        if (err) throw err;
+        console.log(result)
+        return result;
+    
+        client.end();
+        });
+    };
+
+    mysqlGet(query)
+
+}
 
 
 
