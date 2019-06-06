@@ -9,7 +9,8 @@ CREATE TABLE reservations (
   name VARCHAR(45) NULL,
   status VARCHAR(45) NULL,
   email VARCHAR(45) NULL,
-  phone VARCHAR(45) NULL
+  phone VARCHAR(45) NULL,
+  reservation_datetime datetime NULL
 );
 
 INSERT INTO reservations (name, status, email, phone)
