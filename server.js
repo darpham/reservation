@@ -17,32 +17,30 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '/app/public')));
 
 // Routes
-app.get("/", function(req, res) {
+app.get("/index", function(req, res) {
+
     console.log("cd home");
-    res.sendFile(path.join(__dirname, "app/public/index.html"));
+    res.sendFile(path.join(__dirname, "app/public/views/index.html"));
 });
 
 app.get("/make", function(req, res) {
+
     console.log("cd make");
-    res.sendFile(path.join(__dirname, "app/public/make.html"));
+    res.sendFile(path.join(__dirname, "app/public/views/make.html"));
 });
 
 app.get("/view", function(req, res) {
+
     console.log("cd view")
-    res.sendFile(path.join(__dirname, "app/public/view.html"));
+    res.sendFile(path.join(__dirname, "app/public/views/view.html"));
 
 });
 
-
 app.get("/api/view_active", function(req, res) {
 
-    // query = 'SELECT * FROM reservations WHERE status = "active";'
-    query = 'SELECT * FROM reservations;'
+    query = 'SELECT * FROM reservations WHERE status = "active";'
     console.log("sending view_active")
-    //console.log(res.json(pullData(query)))
-    // console.log(res.json(pullData(query)))
     pullData(query, res)
-    
 
 });
 
@@ -50,8 +48,6 @@ app.get("/api/view_waitlist", function(req, res) {
 
     query = 'SELECT * FROM reservations WHERE status = "waitlist";'
     console.log("sending view_waitlist")
-    //res.json(pullData(query))
-    // console.log(result);
     pullData(query, res);
 
 });
@@ -75,7 +71,6 @@ function pullData(query, res) {
         console.log('query run')
 
         if (err) throw err;
-        //console.log(result)
         return res.send(result);
         
     client.end();

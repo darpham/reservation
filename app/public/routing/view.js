@@ -1,56 +1,35 @@
-/* $(document).ready(function() { */
 
-    // $.get("/api/view_active")
-    //    .then(function(data) {
-        $.get("/api/view_active", function(data) {
+    $.get("/api/view_active")
+        .then(function(data) {
             console.log("getting data active")
-            console.log(data);
+            renderList(data, "active");
         });
             
+    $.get("/api/view_waitlist")
+        .then(function(data) {
+            console.log("getting data waitlist")
+            renderList(data, "waitlist");
+        });
 
-
-/*             $.get("/api/view_waitlist")
-            .then(function(data) {
-                console.log("getting data waitlist")
-                console.log(data);
-            });
- */
-
-
-        console.log("!?!?!?!?!?!!?")
-
-
-
-
-
-
-
- /*    
-
-    var renderList = function(list, data) {
+    var renderList = function(data, list_type) {
 
         for (var i = 0; i < data.length; i++) {
-            console.log(data[i]);
+            console.log("run")
+            //console.log(data[i]);
+            console.log(data[i].name)
 
-            var listGroupItem = $("<li class='" +list+ "-list'>");
+            var listDiv = $("<div class='" +list_type+ "-list'>");
 
-            
-            listGroupItem.append($("<h4>").text("Name: " + data[i].name));
-            listGroupItem.append($("<h5>").text("Phone: " + data[i].phone));
-            listGroupItem.append($("<h5>").text("Email: " + data[i].email));
+            var listName = $("<h5><strong>Name: </strong> <span>" + data[i].name + "</span></h5>")
+            var listEmail = $("<h5><strong>Email: </strong> <span>" + data[i].email + "</span></h5>")
+            var listPhone = $("<h5><strong>Phone :</strong> <span id=>" + data[i].phone + "</span></h5>")
 
-            // listGroupItem.html(
-            //     <h4 id="name">data[i].name</h4>
-            //     <div id="stats">
-            //         <h5><strong>Number of People:</strong> <span id="role">3</span></h5>
-            //         <h5><strong>Time:</strong> <span id="age">7:00</span></h5>
-            //         <h5><strong>Phone Number:</strong>data[i].phone</h5>
-            //     </div>
-            //     <hr>
-            // )
-            console.log("appending")
-            $("#"+list).append(listGroupItem);
+            listDiv.append(listName);
+            listDiv.append(listEmail);
+            listDiv.append(listPhone);
+            listDiv.append("<br>");
+
+            $("."+list_type).append(listDiv);
         }
-    } */
+    }
 
-/* }); */
