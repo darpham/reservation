@@ -52,19 +52,19 @@ app.get("/api/view_waitlist", function(req, res) {
 
 });
 
-function pullData(query, res) {
+var client = mysql.createConnection({
+    host: "localhost",
+    port: 3306,
+     
+    user: keys.mysql.id,
+    password: keys.mysql.secret,
 
-    var client = mysql.createConnection({
-        host: "localhost",
-        port: 3306,
-         
-        user: keys.mysql.id,
-        password: keys.mysql.secret,
-    
-        database: "reservationsDB"
-    });
-    
-    client.connect();
+    database: "reservationsDB"
+});
+
+client.connect();
+
+function pullData(query, res) {
 
     client.query(query, (err, result) => {
 
@@ -75,54 +75,56 @@ function pullData(query, res) {
         
     client.end();
     });
+}
 
+function checkActive(res) {
+
+    client.query('SELECT * FROM reservations WHERE status = "active";', (err, result) => {
+
+        console.log('query run')
+
+        if (err) throw err;
+
+        return result.length
+    });
 }
 
 
 
+app.post("/api/add", function(req, res) {
+  
+    var resData = req.body;
+    var numActives = checkActive();
+    console.log(numActives);
 
+    if (numActives <= 3) {
+        createReservation("active", resData);
+    }
+    else {
+        createReservation("waitlist", resData);
+    }
 
-
-
-
-/* // Displays all characters
-app.get("/api/characters", function(req, res) {
-  return res.json(characters);
 });
 
-// Displays a single character, or returns false
-app.get("/api/characters/:character", function(req, res) {
-  var chosen = req.params.character;
+    
 
-  console.log(chosen);
-
-  for (var i = 0; i < characters.length; i++) {
-    if (chosen === characters[i].routeName) {
-      return res.json(characters[i]);
-    }
+  function createReservation(reservationType, resData) {
+    console.log("Inserting a new product...\n");
+    var query = client.query(
+      "INSERT INTO reservations SET ?",
+      {
+        name: resData.name,
+        email: resData.email,
+        phone: resData.number,
+        status: reservationType
+      },
+      function(err, res) {
+        console.log(res + " inserted!\n");
+      }
+    );
+    // logs the actual query being run
+    query;
   }
-
-  return res.json(false);
-}); */
-
-
-
-/* // Create New Characters - takes in JSON input
-app.post("/api/characters", function(req, res) {
-  // req.body hosts is equal to the JSON post sent from the user
-  // This works because of our body parsing middleware
-  var newcharacter = req.body;
-
-  // Using a RegEx Pattern to remove spaces from newCharacter
-  // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-  newcharacter.routeName = newcharacter.name.replace(/\s+/g, "").toLowerCase();
-
-  console.log(newcharacter);
-
-  characters.push(newcharacter);
-
-  res.json(newcharacter);
-}); */
 
 // Starts the server to begin listening
 // =============================================================
