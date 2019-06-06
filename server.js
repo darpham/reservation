@@ -36,21 +36,27 @@ app.get("/view", function(req, res) {
 
 app.get("/api/view_active", function(req, res) {
 
-    query = 'SELECT * FROM reservations WHERE status = "active";'
-    pullData(query);
-
+    // query = 'SELECT * FROM reservations WHERE status = "active";'
+    query = 'SELECT * FROM reservations;'
     console.log("sending view_active")
+    //console.log(res.json(pullData(query)))
+    // console.log(res.json(pullData(query)))
+    pullData(query, res)
+    
+
 });
 
 app.get("/api/view_waitlist", function(req, res) {
 
     query = 'SELECT * FROM reservations WHERE status = "waitlist";'
-    res.json(pullData(query));
-
     console.log("sending view_waitlist")
+    //res.json(pullData(query))
+    // console.log(result);
+    pullData(query, res);
+
 });
 
-var pullData = function(query) {
+function pullData(query, res) {
 
     var client = mysql.createConnection({
         host: "localhost",
@@ -62,21 +68,18 @@ var pullData = function(query) {
         database: "reservationsDB"
     });
     
-    var mysqlGet = function(query) {
-    
-        client.connect();
-    
-        client.query(query, (err, result) => {
-        console.log('query active run')
-        if (err) throw err;
-        console.log(result)
-        return result;
-    
-        client.end();
-        });
-    };
+    client.connect();
 
-    mysqlGet(query)
+    client.query(query, (err, result) => {
+
+        console.log('query run')
+
+        if (err) throw err;
+        //console.log(result)
+        return res.send(result);
+        
+    client.end();
+    });
 
 }
 

@@ -1,19 +1,24 @@
-$(document).ready(function() {
-    // app.use(express.static(path.join(__dirname, '/public')));
+/* $(document).ready(function() { */
 
-
-    console.log("calling view.js")
-
-      
-    $.get("/api/view_active")
-        .then(function(data) {
-          console.log("getting data", data);
+    // $.get("/api/view_active")
+    //    .then(function(data) {
+        $.get("/api/view_active", function(data) {
+            console.log("getting data active")
+            console.log(data);
         });
+            
 
-    $.get("/api/view_waitlist")
-        .then(function(data) {
-          console.log("getting data", data);
-        });
+
+/*             $.get("/api/view_waitlist")
+            .then(function(data) {
+                console.log("getting data waitlist")
+                console.log(data);
+            });
+ */
+
+
+        console.log("!?!?!?!?!?!!?")
+
 
 
 
@@ -48,4 +53,4 @@ $(document).ready(function() {
         }
     } */
 
-});
+/* }); */
