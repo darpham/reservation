@@ -24,7 +24,7 @@
         <hr>
         <h3>Book your seat before they are all gone!</h3>
         <br>
-            <a href="/index"><button class="btn btn-primary btn-lg"><span class="fa fa-eye"></span> Home</button></a>
+            <a href="/"><button class="btn btn-primary btn-lg"><span class="fa fa-eye"></span> Home</button></a>
             <a href="/view"><button class="btn btn-primary btn-lg"><span class="fa fa-th-list"></span> View Tables</button></a>
     </div>
     <div class="row">
@@ -35,18 +35,17 @@
           </div>
           <div class="card-body">
             <form role="form">
+
               <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text" class="form-control" id="name">
               </div>
+
               <div class="form-group">
                 <label for="email">Email</label>
                 <input type="text" class="form-control" id="email">
               </div>
-              <!-- <div class="form-group">
-                <label for="time">Time</label>
-                <input type="text" class="form-control" id="age">
-              </div> -->
+
               <div class="form-group">
                 <label for="phone">Phone Number</label>
                 <input type="text" class="form-control" id="number">
@@ -64,28 +63,6 @@
       </div>
     </div>
   </div>
-
-  <script type="text/javascript">
-    // Question: What does this code do?
-/*     $("#add-btn").on("click", function(event) {
-      event.preventDefault();
-
-      var newReservation = {
-        name: $("#name").val().trim(),
-        number: $("#number").val().trim(),
-        email: $("#email").val().trim()
-      };
-
-      // Question: What does this code do??
-      $.post("/api/add", newReservation)
-        .then(function(data) {
-          console.log(data);
-          alert("Adding reservation...");
-        });
-
-    }); */
-
-  </script>
 
 <script src="routing/make.js" type="text/javascript"></script>  
 </body>

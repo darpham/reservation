@@ -37,7 +37,6 @@
         event.preventDefault();
         console.log("search button clicked")
 
-        
         $("#search-card").show();
         $(".search-list").empty();
 
