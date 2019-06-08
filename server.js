@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '/app/public')));
 
 // Routes
-app.get("/index", function(req, res) {
+app.get("/", function(req, res) {
 
     console.log("cd home");
     res.sendFile(path.join(__dirname, "app/public/views/index.html"));
@@ -52,6 +52,17 @@ app.get("/api/view_waitlist", function(req, res) {
 
 });
 
+app.get("/api/search/:name", function(req, res) {
+
+    var name = req.params.name
+    //console.log(name)
+    query = 'SELECT * FROM reservations WHERE ?'
+    // console.log("searching reservations for "+ name)
+    queryData(query, res, name);
+
+});
+
+
 var client = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -64,11 +75,28 @@ var client = mysql.createConnection({
 
 client.connect();
 
+
+
+function queryData(query, res, name) {
+    console.log('search query run')
+    console.log(name)
+    console.log(query);
+    client.query(query, {name: name}, (err, result) => {
+    
+        if (err) throw err;
+        this.sql
+        return res.send(result);
+        
+    });
+}
+
+
+
 function pullData(query, res) {
 
     client.query(query, (err, result) => {
 
-        console.log('query run')
+        console.log('pull query run')
 
         if (err) throw err;
         return res.send(result);

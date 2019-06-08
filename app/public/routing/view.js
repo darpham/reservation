@@ -33,3 +33,21 @@
         }
     }
 
+    $("#search-btn").on("click", function() {
+        event.preventDefault();
+        console.log("search button clicked")
+
+        
+        $("#search-card").show();
+        $(".search-list").empty();
+
+        var searchedName = $("#name-search").val();
+        console.log(searchedName)
+
+        $.get("/api/search/" + searchedName)
+        .then(function(data) {
+            console.log("searching reservation")
+            console.log(data)
+            renderList(data, "search");
+        });
+    });

@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
   <script src="https://code.jquery.com/jquery.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-  <script src="routing/view.js" type="text/javascript"></script>  
+  <!-- <script src="routing/view.js" type="text/javascript"></script>   -->
 
   <style>
     .jumbotron {
@@ -38,7 +38,7 @@
             <h3><strong>Reservations Search</strong></h3>
           </div>
           <div class="card-body">
-            <input type="text" id="character-search" class="form-control">
+            <input type="text" id="name-search" class="form-control">
             <br>
             <div class="text-right">
               <button type="submit" class="btn btn-primary btn-md" id="search-btn"><span class="fa fa-search"></span> Search
@@ -47,20 +47,22 @@
           </div>
         </div>
 
+
+    <div class="card" id="search-card" style="display:none">
+        <div class="card-header">
+            <h3><strong>Search Result</strong></h3>
+        </div>
+        <div class="card-body">
+            <div class="search"></div>
+        </div>
+    </div>
+
     <div class="card">
         <div class="card-header">
             <h3><strong>Active Reservations</strong></h3>
         </div>
         <div class="card-body">
             <div class="active"></div>
-            
-<!--             <h4 id="name">Takeo</h4>
-            <div id="stats">
-                <h5><strong>Number of People:</strong> <span id="role">3</span></h5>
-                <h5><strong>Time:</strong> <span id="age">7:00</span></h5>
-                <h5><strong>Phone Number:</strong> <span id="force-points">333-333-3333</span></h5>
-            </div>
-            <hr> -->
         </div>
     </div>
 
@@ -71,14 +73,6 @@
         </div>
         <div class="card-body">
             <div class="waitlist"></div>
-            
-<!--             <h4 id="name">Takeo</h4>
-            <div id="stats">
-                <h5><strong>Number of People:</strong> <span id="role">3</span></h5>
-                <h5><strong>Time:</strong> <span id="age">7:00</span></h5>
-                <h5><strong>Phone Number:</strong> <span id="force-points">333-333-3333</span></h5>
-            </div>
-            <hr> -->
         </div>
     </div>
       </div>
@@ -86,6 +80,6 @@
   </div>
   
   
-
+  <script src="routing/view.js" type="text/javascript"></script>  
   </body>
 </html>
